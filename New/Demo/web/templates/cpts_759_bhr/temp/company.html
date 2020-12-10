@@ -1,0 +1,583 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon.png">
+    <title>EasyFlight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <!-- Graph CSS -->
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet'
+          type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="/static/css/icon-font.min.css" type='text/css'/>
+    <!-- //lined-icons -->
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/echarts/echarts.js"></script>
+    <script src="/static/echarts/map/china.js"></script>
+    <script src="/static/js/amcharts.js"></script>
+    <script src="/static/js/serial.js"></script>
+    <script src="/static/js/light.js"></script>
+    <script src="/static/js/radar.js"></script>
+    <link href="/static/css/barChart.css" rel='stylesheet' type='text/css'/>
+    <link href="/static/css/fabochart.css" rel='stylesheet' type='text/css'/>
+    <!--clock init-->
+    <script src="/static/js/css3clock.js"></script>
+    <!--Easy Pie Chart-->
+    <!--skycons-icons-->
+    <script src="/static/js/skycons.js"></script>
+    <!--//skycons-icons-->
+</head>
+<body>
+<div class="page-container">
+    <!--/content-inner-->
+    <div class="left-content">
+        <div class="inner-content">
+            <!-- header-starts -->
+            <div class="header-section">
+                <!--menu-right-->
+                <div class="top_menu">
+                    <div class="float-left">
+                        <a><h1>
+                            <img src="/static/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                            <span>EasyFlight易飞</span></h1></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--//menu-right-->
+                <div class="clearfix"></div>
+            </div>
+            <!-- //header-ends -->
+            <div class="outter-wp">
+                <div class="sub-heard-part">
+                    <ol class="breadcrumb m-b-0">
+                        <li><a>数据分析</a></li>
+                        <li class="active">航空公司</li>
+                    </ol>
+                </div>
+
+                <div class="pie">
+                    <div class="col-md-6 chrt-two">
+                        <div id="chart3" class="float-left"></div>
+                        <script>
+                            var chart3=echarts.init(document.getElementById('chart3'));
+                            option = {
+                                color: ['#3398DB'],
+                                title: {
+                                    text: '航空公司航班数排名',
+                                    //textStyle: {
+                                    //    color: '#fff'
+                                    //}
+                                },
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: {
+                                        type: 'shadow'
+                                    },
+                                    formatter: "{b} <br> 航班数: {c}"
+                                },
+                                /*legend: {
+                                    data: [date]
+                                },*/
+                                grid: {
+                                    left: '4%',
+                                    right: '4%',
+                                    bottom: '2%',
+                                    containLabel: true
+                                },
+
+                                xAxis: {
+                                    type: 'value',
+                                    boundaryGap: [0, 0.01],
+                                    min: 0,
+                                    max: 10,
+                                    interval: 20,
+                                    axisLabel: {
+                                        // formatter: '{value}%',
+                                        textStyle: {
+                                            //color: '#fff',
+                                            fontWeight: '80'
+                                        }
+                                    }
+                                },
+                                yAxis: {
+                                    type: 'category',
+                                    data: ['1', '2', '3', '4', '5', '6', '7','8','9','0','1', '2', '3', '4', '5', '6', '7','8','9','0','1', '2', '3', '4', '5', '6', '7','8','9','0','1', '2', '3', '4', '5', '6', '7','8','9','0','1', '2', '3', '4', '5', '6', '7','8','9','0','1', '2', '3', '4', '5', '6', '7','8','9','0',],
+                                    axisLabel: {
+                                        show: true,
+                                        interval: 0,
+                                        rotate: 0,
+                                        margin: 10,
+                                        inside: false,
+                                        textStyle: {
+                                            //color: '#fff',
+                                            fontWeight: '50'
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    type: 'bar',
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            // formatter: '{c}',
+                                            formatter: function(v) {
+                                                var val = v.data;
+                                                if (val == 0) {
+                                                    return '';
+                                                }
+                                                return val;
+                                            },
+                                            color: '#fff'
+                                        }
+                                    },
+                                    data: [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]
+                                }]
+                            };
+                            chart3.setOption(option);
+                        </script>
+                        <div class="graph float-right" id="graph3" style="overflow-y:scroll">
+                            <div class="tables">
+
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th width="10%" class="text-center">排名</th>
+                                        <th width="20%" class="text-center">航空公司</th>
+                                        <th width="10%" class="text-center">数量</th>
+                                        <th width="60%" class="text-center">下属航班</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 chrt-two">
+                        <div class="graph float-left" id="graph4" style="overflow-y:scroll">
+                            <div class="tables">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th width="20%" class="text-center">排名</th>
+                                        <th width="50%" class="text-center">航空公司</th>
+                                        <th width="30%" class="text-center">平均准点率</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Mark</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div id="chart5" class="float-right"></div>
+                        <script>
+                            option = {
+                                title:{
+                                    text:'准点率统计',
+                                    left:'center'
+                                },
+                                legend: {
+                                    // orient: 'vertical',
+                                    // top: 'middle',
+                                    bottom: 10,
+                                    left: 'center',
+                                    data: ['<70%','70%-80%','80%-90%','90%-95%','95%-100%']
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                series: [{
+                                    name: '准点率',
+                                    type: 'pie',
+                                    radius: '68%',
+                                    center: ['50%', '50%'],
+                                    clockwise: false,
+                                    data: [
+                                        {
+                                            value: 7,
+                                            name: '<70%'
+                                        },
+                                        {
+                                            value: 8,
+                                            name: '70%-80%'
+                                        },
+                                        {
+                                            value: 15,
+                                            name: '80%-90%'
+                                        },
+                                        {
+                                            value: 25,
+                                            name: '90%-95%'
+                                        },
+                                        {
+                                        value: 45,
+                                        name: '95%-100%'
+                                    }],
+                                    label: {
+                                        normal: {
+                                            textStyle: {
+                                                color: '#999',
+                                                fontSize: 14,
+                                            }
+                                        }
+                                    },
+                                    labelLine: {
+                                        normal: {
+                                            show: false
+                                        }
+                                    },
+                                    itemStyle: {
+                                        normal: {
+                                            borderWidth: 4,
+                                            borderColor: '#ffffff',
+                                        },
+                                        emphasis: {
+                                            borderWidth: 0,
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        }
+                                    }
+                                }],
+                                color: [
+                                    '#c8efff',
+                                    '#a7e7ff',
+                                    '#79d9f1',
+                                    '#52cdd5',
+                                    '#00acee'
+                                ],
+                                backgroundColor: '#fff'
+                            };
+                            var chart5=echarts.init(document.getElementById('chart5'));
+                            chart5.setOption(this.option);
+                        </script>
+                    </div>
+
+                    <div class="col-md-6 chrt-three second">
+                        <div id="chart4"></div>
+                        <script>
+                            var dataYijia5 = [
+                                [58,0.87,'良','优','中','优']
+                            ];
+                            var dataMix2 = [
+                                [110,0.77,'良','良','中','良']
+                            ];
+                            var dataMeizu7 = [
+                                [88,0.92,'优','中','良','良']
+                            ];
+                            var dataOppo11 = [
+                                [42,0.862,'良','优','中','良']
+                            ];
+                            var dataVivo6 = [
+                                [174,0.95,'优','优','良','优']
+                            ];
+                            var dataMate10 = [
+                                [124,0.88,'良','中','良','中']
+                            ];
+                            var dataNote8 = [
+                                [66,0.75,'良','中','中','良']
+                            ];
+                            var dataIponex = [
+                                [155,0.97,'优','优','良','优']
+                            ];
+                            var dataJiangg2 = [
+                                [132,0.92,'良','优','良','优']
+                            ];
+                            var dataZqm = [
+                                [59,0.957,'良','良','优','良']
+                            ];
+                            var dataHtc11 = [
+                                [78,0.907,'良','优','良','优']
+                            ];
+
+                            var schema = [{
+                                name: '航班数',
+                                index: 0,
+                                text: '航班数'
+                            },
+                                {
+                                    name: '准点率',
+                                    index: 1,
+                                    text: '准点率'
+                                },
+                                {
+                                    name: '舒适度',
+                                    index: 2,
+                                    text: '舒适度'
+                                },
+                                {
+                                    name: '安全性',
+                                    index: 3,
+                                    text: '安全性'
+                                },
+                                {
+                                    name: '用户满意度',
+                                    index: 4,
+                                    text: '用户满意度'
+                                },
+                                {
+                                    name: '综合评价',
+                                    index: 5,
+                                    text: '综合评价'
+                                }
+                            ];
+                            var lineStyle = {
+                                normal: {
+                                    width: 1,
+                                    opacity: 1
+                                }
+                            };
+
+                            option = {
+                                color: ['#da0d68', '#975e6d', '#a2b029', '#c78936', '#8c292c', '#f89a1c', '#dd4c51', '#3e0317', '#f2684b', '#be8663', '#6569b0'],
+                                title: {
+                                    text: '航空公司Top10',
+                                    subtext: '各项数据总览'
+                                },
+
+                                legend: {
+                                    data: ['一加5T', '小米mix2', '魅族pro7 plus', 'oppo r11s', 'vivo xplay6', '华为mate10 pro', '三星note8', '苹果X', '坚果Pro2', '中兴Axon M', 'HTC U11'],
+                                    bottom: 1
+                                },
+                                parallelAxis: [{
+                                    dim: 0,
+                                    name: schema[0].text,
+                                    max:200
+                                },
+                                    {
+                                        dim: 1,
+                                        name: schema[1].text,
+                                        max:1.00,
+                                        min:0.50
+                                    },
+                                    {
+                                        dim: 2,
+                                        name: schema[2].text,
+                                        type: 'category',
+                                        data:['差','中','良','优']
+                                    },
+                                    {
+                                        dim: 3,
+                                        name: schema[3].text,
+                                        type: 'category',
+                                        data:['差','中','良','优']
+                                    },
+                                    {
+                                        dim: 4,
+                                        name: schema[4].text,
+                                        type: 'category',
+                                        data:['差','中','良','优']
+                                    },
+                                    {
+                                        dim: 5,
+                                        name: schema[5].text,
+                                        type: 'category',
+                                        data:['差','中','良','优']
+                                    }
+                                ],
+                                parallel: {
+                                    left: '5%',
+                                    right: '13%',
+                                    bottom: '15%',
+                                    top: '16%',
+                                    parallelAxisDefault: {
+                                        type: 'value',
+                                        nameLocation: 'end',
+                                        nameGap: 20
+                                    }
+                                },
+                                series: [{
+                                    name: '一加5T',
+                                    type: 'parallel',
+                                    lineStyle: lineStyle,
+                                    smooth: true,
+                                    data: dataYijia5
+                                },
+                                    {
+                                        name: '小米mix2',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: 0.2,
+                                        data: dataMix2
+                                    },
+                                    {
+                                        name: '魅族pro7 plus',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataMeizu7
+                                    },
+                                    {
+                                        name: 'oppo r11s',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataOppo11
+                                    },
+                                    {
+                                        name: 'vivo xplay6',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataVivo6
+                                    },
+                                    {
+                                        name: '华为mate10 pro',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataMate10
+                                    },
+                                    {
+                                        name: '三星note8',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: 0.6,
+                                        data: dataNote8
+                                    },
+                                    {
+                                        name: '苹果X',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataIponex
+                                    },
+                                    {
+                                        name: '坚果Pro2',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataJiangg2
+                                    },
+                                    {
+                                        name: '中兴Axon M',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataZqm
+                                    },
+                                    {
+                                        name: 'HTC U11',
+                                        type: 'parallel',
+                                        lineStyle: lineStyle,
+                                        smooth: true,
+                                        data: dataHtc11
+                                    }
+                                ]
+                            };
+                            var chart4=echarts.init(document.getElementById('chart4'));
+                            chart4.setOption(option);
+                        </script>
+
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <!--//outer-wp-->
+            </div>
+            <!--footer section start-->
+            <footer>
+                <p>Copyright &copy; 2019,EasyFlight  -  By SCU BaiGeiShaoNian </p>
+            </footer>
+            <!--footer section end-->
+        </div>
+    </div>
+    <!--//content-inner-->
+    <!--/sidebar-menu-->
+    <div class="sidebar-menu">
+        <header class="logo">
+            <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="../index"> <span
+                id="logo"> <h1>EasyFlight</h1></span>
+            <!--<img id="logo" src="" alt="Logo"/>-->
+        </a>
+        </header>
+        <div style="border-top:1px solid rgba(69, 74, 84, 0.7)"></div>
+        <!--/down-->
+        <div class="down">
+            <a href="../index"><img src="/static/images/admin.jpg"></a>
+            <a href="../index"><span class=" name-caret">Jasmin Leo</span></a>
+            <p>System Administrator in Company</p>
+            <ul>
+                <li><a class="tooltips" href="../index"><span>Profile</span><i class="lnr lnr-user"></i></a></li>
+                <li><a class="tooltips" href="../index"><span>Settings</span><i class="lnr lnr-cog"></i></a></li>
+                <li><a class="tooltips" href="../index"><span>Log out</span><i class="lnr lnr-power-switch"></i></a>
+                </li>
+            </ul>
+        </div>
+        <!--//down-->
+        <div class="menu">
+            <ul id="menu">
+                <li id="menu-academico"><a><i class="fa fa-table"></i> <span>航班订制</span><span
+                        class="fa fa-angle-right" style="float: right"></span></a>
+                    <ul>
+                        <li><a href="../flight">航班查询</a></li>
+                        <li><a href="../flightLine">航线查询</a></li>
+                        <li><a href="../flightFare">票价查询</a></li>
+                    </ul>
+                </li>
+                <li id="menu-academico"><a><i class="fa fa-file-text-o"></i><span>数据分析</span><span
+                        class="fa fa-angle-right" style="float: right"></span></a>
+                    <ul>
+                        <li><a href="../airport">机场数据</a></li>
+                        <li><a href="../company">航空公司</a></li>
+                        <li><a href="../plane">飞机机型</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script>
+    var toggle = true;
+
+    $(".sidebar-icon").click(function () {
+        if (toggle) {
+            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+            $("#menu span").css({"position": "absolute"});
+        } else {
+            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+            setTimeout(function () {
+                $("#menu span").css({"position": "relative"});
+            }, 400);
+        }
+
+        toggle = !toggle;
+    });
+</script>
+<!--js -->
+<script src="/static/js/jquery.nicescroll.js"></script>
+<script src="/static/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

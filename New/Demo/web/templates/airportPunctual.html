@@ -1,0 +1,495 @@
+{% load staticfiles %}
+<html>
+<head>
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon.png">
+    <title>EasyFlight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css'/>
+    <!-- Graph CSS -->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <!-- jQuery -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet'
+          type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="/static/css/icon-font.min.css" type='text/css'/>
+    <!-- //lined-icons -->
+    <script src="{% static 'echarts/echarts.js' %}"></script>
+    <script src="{% static 'echarts/echarts-liquidfill.js'%}"></script>
+    <script src="{% static 'echarts/map/china.js' %}"></script>
+    <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'js/amcharts.js' %}"></script>
+    <script src="{% static 'js/serial.js' %}"></script>
+    <script src="{% static 'js/light.js' %}"></script>
+    <script src="{% static 'js/radar.js' %}"></script>
+    <link href="{% static 'css/fabochart.css' %}" rel='stylesheet' type='text/css'/>
+    <!--clock init-->
+    <script src="{% static 'js/css3clock.js' %}"></script>
+    <!--Easy Pie Chart-->
+    <!--skycons-icons-->
+    <script src="{% static 'js/skycons.js' %}"></script>
+    <!--//skycons-icons-->
+    <!--城市输入-->
+    <link rel="stylesheet" href="{% static 'css/city.css' %}" type="text/css">
+    <script type="text/javascript" src="{% static 'js/city.js' %}"></script>
+</head>
+<body>
+<div class="page-container">
+    <!--/content-inner-->
+    <div class="left-content">
+        <div class="inner-content">
+            <!-- header-starts -->
+            <div class="header-section">
+                <!--menu-right-->
+                <div class="top_menu">
+                    <div class="float-left">
+                        <a><h1>
+                            <!--<img src="/static/images/logo-light-icon.png" alt="homepage" class="light-logo"/>-->
+                            <span>    Personal Flight</span></h1></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--//menu-right-->
+                <div class="clearfix"></div>
+            </div>
+            <!-- //header-ends -->
+            <!--//outer-wp-->
+            <div class="outter-wp">
+                <div class="sub-heard-part float-left">
+                    <ol class="breadcrumb m-b-0">
+                        <li><a>航班订制</a></li>
+                        <li class="active">航线查询</li>
+                    </ol>
+                </div>
+
+                <div class="inbox-mail">
+                    <div class="col-md-12 compose">
+                        <div class="col-md-12">
+                            <div class="grid-1">
+                                <div class="form-body" align="left">
+                                    <div data-example-id="simple-form-inline">
+                                        <form method="post" class="form-inline">
+                                            <div class="form-group">
+                                                <label>出发城市</label>
+                                                <input name="fromCity" type="text" value="中文/拼音" id="fromCity"
+                                                       onclick="suggestF.display(this,'fromCity',event);"
+                                                       onkeydown="item_suggest.item_display(this,'',event);"
+                                                       onblur="item_suggest.item_onblur(this);" class="form-control"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>到达城市</label>
+                                                <input name="toCity" type="text" value="中文/拼音" id="toCity"
+                                                       onclick="suggestF.display(this,'toCity',event);"
+                                                       onkeydown="item_suggest.item_display(this,'',event);"
+                                                       onblur="item_suggest.item_onblur(this);"
+                                                       class="form-control"/>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>日期</label>
+                                                <input name="data2" type="text" value="中文/拼音" id="data2"
+                                                       onclick="suggestF.display(this,'toCity',event);"
+                                                       onkeydown="item_suggest.item_display(this,'',event);"
+                                                       onblur="item_suggest.item_onblur(this);"
+                                                       class="form-control"/>
+                                                <!--<input type="date" id="date2" class="form-control ng-invalid ng-invalid-required"-->
+                                                       <!--ng-model="model.date" required="">-->
+                                            </div>
+                                            <div class="form-group float-right">
+                                                <div> <input type="submit" class="btn btn-default" value="航班查询" ></div>
+
+                                                <input type="button" class="btn btn-default" value="价格区间" onclick="javascrtpt:window.location.href='http://127.0.0.1:8000/airportRecommend'">
+                                                <input type="button" class="btn btn-default" value="价格折线" onclick="javascrtpt:window.location.href='http://127.0.0.1:8000/airportDiscount/'">
+                                                <input type="button" class="btn btn-default" value="准点率" onclick="javascrtpt:window.location.href='http://127.0.0.1:8000/airportPunctual/'">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Input Group -->
+                    </div>
+                    <!-- tab content -->
+                    <div class="col-md-12 tab-content tab-content-in">
+                        {{echart|safe}}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <!--//outer-wp-->
+            <!--footer section start-->
+            <footer>
+                <p>Copyright &copy; 2020,航班数据分析系统 - By SCU yxx </p>
+            </footer>
+            <!--footer section end-->
+        </div>
+    </div>
+    <!--//content-inner-->
+    <!--/sidebar-menu-->
+    <div class="sidebar-menu">
+        <header class="logo">
+            <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="../index"> <span
+                id="logo"> <h1>航班分析</h1></span>
+            <!--<img id="logo" src="" alt="Logo"/>-->
+        </a>
+        </header>
+        <div style="border-top:1px solid rgba(69, 74, 84, 0.7)"></div>
+        <!--/down-->
+        <div class="down">
+            <a href="../index"><img src="/static/images/admin.jpg"></a>
+            <a href="../index"><span class=" name-caret">精准数据支持</span></a>
+            <!--<p>System Administrator in Company</p>-->
+            <ul>
+                <li><a class="tooltips" href="../index"><span>Profile</span><i class="lnr lnr-user"></i></a></li>
+                <li><a class="tooltips" href="../index"><span>Settings</span><i class="lnr lnr-cog"></i></a></li>
+                <li><a class="tooltips" href="../index"><span>Log out</span><i class="lnr lnr-power-switch"></i></a>
+                </li>
+            </ul>
+        </div>
+        <!--//down-->
+        <div class="menu">
+            <ul id="menu">
+                        <!--在这里填入url就可以跳转到指定的url-->
+
+                        <li><a href="../flightLine">航线查询</a></li>
+                        <li><a href="../geoLine">航线展示</a></li>
+                        <li><a href="../airportRecommend">推荐航班</a></li>
+                        <li><a href="../airport">机场数量</a></li>
+                        <li><a href="../airportAccount">全国航班</a></li>
+                        <li><a href="../priceShow">票价区间</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<!--航线模态框-->
+<div class="modal fade" id="lineModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close second" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title">航班航线图</h2>
+            </div>
+            <div class="modal-body">
+
+
+                <!--<script>-->
+                    <!--var geoCoordMap = {-->
+                        <!--'上海': [121.4648, 31.2891],-->
+                        <!--'东莞': [113.8953, 22.901],-->
+                        <!--'东营': [118.7073, 37.5513],-->
+                        <!--'中山': [113.4229, 22.478],-->
+                        <!--'临汾': [111.4783, 36.1615],-->
+                        <!--'临沂': [118.3118, 35.2936],-->
+                        <!--'丹东': [124.541, 40.4242],-->
+                        <!--'丽水': [119.5642, 28.1854],-->
+                        <!--'乌鲁木齐': [87.9236, 43.5883],-->
+                        <!--'佛山': [112.8955, 23.1097],-->
+                        <!--'保定': [115.0488, 39.0948],-->
+                        <!--'兰州': [103.5901, 36.3043],-->
+                        <!--'包头': [110.3467, 41.4899],-->
+                        <!--'北京': [116.4551, 40.2539],-->
+                        <!--'北海': [109.314, 21.6211],-->
+                        <!--'南京': [118.8062, 31.9208],-->
+                        <!--'南宁': [108.479, 23.1152],-->
+                        <!--'南昌': [116.0046, 28.6633],-->
+                        <!--'南通': [121.1023, 32.1625],-->
+                        <!--'厦门': [118.1689, 24.6478],-->
+                        <!--'台州': [121.1353, 28.6688],-->
+                        <!--'合肥': [117.29, 32.0581],-->
+                        <!--'呼和浩特': [111.4124, 40.4901],-->
+                        <!--'咸阳': [108.4131, 34.8706],-->
+                        <!--'哈尔滨': [127.9688, 45.368],-->
+                        <!--'唐山': [118.4766, 39.6826],-->
+                        <!--'嘉兴': [120.9155, 30.6354],-->
+                        <!--'大同': [113.7854, 39.8035],-->
+                        <!--'大连': [122.2229, 39.4409],-->
+                        <!--'天津': [117.4219, 39.4189],-->
+                        <!--'太原': [112.3352, 37.9413],-->
+                        <!--'威海': [121.9482, 37.1393],-->
+                        <!--'宁波': [121.5967, 29.6466],-->
+                        <!--'宝鸡': [107.1826, 34.3433],-->
+                        <!--'宿迁': [118.5535, 33.7775],-->
+                        <!--'常州': [119.4543, 31.5582],-->
+                        <!--'广州': [113.5107, 23.2196],-->
+                        <!--'廊坊': [116.521, 39.0509],-->
+                        <!--'延安': [109.1052, 36.4252],-->
+                        <!--'张家口': [115.1477, 40.8527],-->
+                        <!--'徐州': [117.5208, 34.3268],-->
+                        <!--'德州': [116.6858, 37.2107],-->
+                        <!--'惠州': [114.6204, 23.1647],-->
+                        <!--'成都': [103.9526, 30.7617],-->
+                        <!--'扬州': [119.4653, 32.8162],-->
+                        <!--'承德': [117.5757, 41.4075],-->
+                        <!--'拉萨': [91.1865, 30.1465],-->
+                        <!--'无锡': [120.3442, 31.5527],-->
+                        <!--'日照': [119.2786, 35.5023],-->
+                        <!--'昆明': [102.9199, 25.4663],-->
+                        <!--'杭州': [119.5313, 29.8773],-->
+                        <!--'枣庄': [117.323, 34.8926],-->
+                        <!--'柳州': [109.3799, 24.9774],-->
+                        <!--'株洲': [113.5327, 27.0319],-->
+                        <!--'武汉': [114.3896, 30.6628],-->
+                        <!--'汕头': [117.1692, 23.3405],-->
+                        <!--'江门': [112.6318, 22.1484],-->
+                        <!--'沈阳': [123.1238, 42.1216],-->
+                        <!--'沧州': [116.8286, 38.2104],-->
+                        <!--'河源': [114.917, 23.9722],-->
+                        <!--'泉州': [118.3228, 25.1147],-->
+                        <!--'泰安': [117.0264, 36.0516],-->
+                        <!--'泰州': [120.0586, 32.5525],-->
+                        <!--'济南': [117.1582, 36.8701],-->
+                        <!--'济宁': [116.8286, 35.3375],-->
+                        <!--'海口': [110.3893, 19.8516],-->
+                        <!--'淄博': [118.0371, 36.6064],-->
+                        <!--'淮安': [118.927, 33.4039],-->
+                        <!--'深圳': [114.5435, 22.5439],-->
+                        <!--'清远': [112.9175, 24.3292],-->
+                        <!--'温州': [120.498, 27.8119],-->
+                        <!--'渭南': [109.7864, 35.0299],-->
+                        <!--'湖州': [119.8608, 30.7782],-->
+                        <!--'湘潭': [112.5439, 27.7075],-->
+                        <!--'滨州': [117.8174, 37.4963],-->
+                        <!--'潍坊': [119.0918, 36.524],-->
+                        <!--'烟台': [120.7397, 37.5128],-->
+                        <!--'玉溪': [101.9312, 23.8898],-->
+                        <!--'珠海': [113.7305, 22.1155],-->
+                        <!--'盐城': [120.2234, 33.5577],-->
+                        <!--'盘锦': [121.9482, 41.0449],-->
+                        <!--'石家庄': [114.4995, 38.1006],-->
+                        <!--'福州': [119.4543, 25.9222],-->
+                        <!--'秦皇岛': [119.2126, 40.0232],-->
+                        <!--'绍兴': [120.564, 29.7565],-->
+                        <!--'聊城': [115.9167, 36.4032],-->
+                        <!--'肇庆': [112.1265, 23.5822],-->
+                        <!--'舟山': [122.2559, 30.2234],-->
+                        <!--'苏州': [120.6519, 31.3989],-->
+                        <!--'莱芜': [117.6526, 36.2714],-->
+                        <!--'菏泽': [115.6201, 35.2057],-->
+                        <!--'营口': [122.4316, 40.4297],-->
+                        <!--'葫芦岛': [120.1575, 40.578],-->
+                        <!--'衡水': [115.8838, 37.7161],-->
+                        <!--'衢州': [118.6853, 28.8666],-->
+                        <!--'西宁': [101.4038, 36.8207],-->
+                        <!--'西安': [109.1162, 34.2004],-->
+                        <!--'贵阳': [106.6992, 26.7682],-->
+                        <!--'连云港': [119.1248, 34.552],-->
+                        <!--'邢台': [114.8071, 37.2821],-->
+                        <!--'邯郸': [114.4775, 36.535],-->
+                        <!--'郑州': [113.4668, 34.6234],-->
+                        <!--'鄂尔多斯': [108.9734, 39.2487],-->
+                        <!--'重庆': [107.7539, 30.1904],-->
+                        <!--'金华': [120.0037, 29.1028],-->
+                        <!--'铜川': [109.0393, 35.1947],-->
+                        <!--'银川': [106.3586, 38.1775],-->
+                        <!--'镇江': [119.4763, 31.9702],-->
+                        <!--'长春': [125.8154, 44.2584],-->
+                        <!--'长沙': [113.0823, 28.2568],-->
+                        <!--'长治': [112.8625, 36.4746],-->
+                        <!--'阳泉': [113.4778, 38.0951],-->
+                        <!--'青岛': [120.4651, 36.3373],-->
+                        <!--'韶关': [113.7964, 24.7028]-->
+
+                    <!--};-->
+                    <!--var BJData = [-->
+                        <!--[{-->
+                            <!--name: '乌鲁木齐',-->
+                            <!--value: 90-->
+                        <!--}, {-->
+                            <!--name: '杭州'-->
+                        <!--}]-->
+                    <!--];-->
+                    <!--var convertData = function (data) {-->
+                        <!--var res = [];-->
+                        <!--for (var i = 0; i < data.length; i++) {-->
+                            <!--var dataItem = data[i];-->
+                            <!--var fromCoord = geoCoordMap[dataItem[0].name];-->
+                            <!--var toCoord = geoCoordMap[dataItem[1].name];-->
+                            <!--if (fromCoord && toCoord) {-->
+                                <!--res.push([{-->
+                                    <!--coord: fromCoord,-->
+                                    <!--value: dataItem[0].value-->
+                                <!--}, {-->
+                                    <!--coord: toCoord,-->
+                                <!--}]);-->
+                            <!--}-->
+                        <!--}-->
+                        <!--return res;-->
+                    <!--};-->
+                    <!--var myChart = echarts.init(document.getElementById('line'));-->
+                    <!--var color = ['#a6c84c', '#ffa022', '#46bee9'];-->
+                    <!--var series = [];-->
+                    <!--[-->
+                        <!--['杭州', BJData]-->
+                    <!--].forEach(function (item, i) {-->
+                        <!--series.push(-->
+                            <!--{-->
+                                <!--type: 'lines',-->
+                                <!--zlevel: 2,-->
+                                <!--effect: {-->
+                                    <!--show: true,-->
+                                    <!--period: 4,-->
+                                    <!--trailLength: 0.02,-->
+                                    <!--symbol: 'arrow',-->
+                                    <!--symbolSize: 5,-->
+                                <!--},-->
+                                <!--lineStyle: {-->
+                                    <!--normal: {-->
+                                        <!--width: 1,-->
+                                        <!--opacity: 0.6,-->
+                                        <!--curveness: 0.2-->
+                                    <!--}-->
+                                <!--},-->
+
+                                <!--data: convertData(item[1])-->
+                            <!--}, {-->
+                                <!--type: 'scatter',-->
+                                <!--coordinateSystem: 'geo',-->
+                                <!--zlevel: 2,-->
+                                <!--rippleEffect: {-->
+                                    <!--period: 4,-->
+                                    <!--brushType: 'stroke',-->
+                                    <!--scale: 4-->
+                                <!--},-->
+                                <!--label: {-->
+                                    <!--normal: {-->
+                                        <!--show: true,-->
+                                        <!--position: 'right',-->
+                                        <!--offset: [5, 0],-->
+                                        <!--formatter: '{b}'-->
+                                    <!--},-->
+                                    <!--emphasis: {-->
+                                        <!--show: true-->
+                                    <!--}-->
+                                <!--},-->
+                                <!--symbol: 'pin',-->
+                                <!--symbolSize: 30,-->
+                                <!--itemStyle: {-->
+                                    <!--normal: {-->
+                                        <!--show: false,-->
+                                        <!--color: '#f00'-->
+                                    <!--}-->
+                                <!--},-->
+                                <!--data: item[1].map(function (dataItem) {-->
+                                    <!--return {-->
+                                        <!--name: dataItem[0].name,-->
+                                        <!--value: geoCoordMap[dataItem[0].name].concat([dataItem[0].value])-->
+                                    <!--};-->
+                                <!--}),-->
+                            <!--},-->
+                            <!--//被攻击点-->
+                            <!--{-->
+                                <!--type: 'scatter',-->
+                                <!--coordinateSystem: 'geo',-->
+                                <!--zlevel: 2,-->
+                                <!--rippleEffect: {-->
+                                    <!--period: 4,-->
+                                    <!--brushType: 'stroke',-->
+                                    <!--scale: 4-->
+                                <!--},-->
+                                <!--label: {-->
+                                    <!--normal: {-->
+                                        <!--show: true,-->
+                                        <!--position: 'right',-->
+                                        <!--//			                offset:[5, 0],-->
+
+                                        <!--color: '#00ffff',-->
+                                        <!--formatter: '{b}',-->
+                                        <!--textStyle: {-->
+                                            <!--color: "#00ffff"-->
+                                        <!--}-->
+                                    <!--},-->
+                                    <!--emphasis: {-->
+                                        <!--show: true-->
+                                    <!--}-->
+                                <!--},-->
+                                <!--symbol: 'pin',-->
+                                <!--symbolSize: 30,-->
+                                <!--itemStyle: {-->
+                                    <!--normal: {-->
+                                        <!--show: true,-->
+                                        <!--color: '#f00'-->
+                                    <!--}-->
+                                <!--},-->
+                                <!--data: [{-->
+                                    <!--name: item[0],-->
+                                    <!--value: geoCoordMap[item[0]].concat([100]),-->
+                                <!--}],-->
+                            <!--}-->
+                        <!--);-->
+                    <!--});-->
+
+                    <!--option = {-->
+                        <!--backgroundColor: '#fff',-->
+
+                        <!--geo: {-->
+                            <!--map: 'china',-->
+                            <!--label: {-->
+                                <!--emphasis: {-->
+                                    <!--show: false-->
+                                <!--}-->
+                            <!--},-->
+                            <!--roam: true,-->
+                            <!--layoutCenter: ['50%', '53%'],-->
+                            <!--layoutSize: "108%",-->
+                            <!--itemStyle: {-->
+                                <!--normal: {-->
+                                    <!--color: '#f5f5f5',-->
+                                    <!--borderColor: '#ccc'-->
+                                <!--},-->
+                                <!--emphasis: {-->
+                                    <!--color: '#ccc'-->
+                                <!--}-->
+                            <!--}-->
+                        <!--},-->
+
+                        <!--series: series-->
+                    <!--};-->
+                    <!--myChart.setOption(option);-->
+                <!--</script>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script>
+    var toggle = true;
+
+    $(".sidebar-icon").click(function () {
+        if (toggle) {
+            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+            $("#menu span").css({"position": "absolute"});
+        } else {
+            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+            setTimeout(function () {
+                $("#menu span").css({"position": "relative"});
+            }, 400);
+        }
+
+        toggle = !toggle;
+    });
+</script>
+<!--js -->
+<script src="/static/js/jquery.nicescroll.js"></script>
+<script src="/static/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon.png">
+    <title>EasyFlight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
+    <!-- Custom CSS -->
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <!-- Graph CSS -->
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet'
+          type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="/static/css/icon-font.min.css" type='text/css'/>
+    <!-- //lined-icons -->
+    <script src="/static/echarts/echarts.js"></script>
+    <script src="/static/echarts/map/china.js"></script>
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/js/amcharts.js"></script>
+    <script src="/static/js/serial.js"></script>
+    <script src="/static/js/light.js"></script>
+    <script src="/static/js/radar.js"></script>
+    {#    <link href="/static/css/barChart.css" rel='stylesheet' type='text/css' />#}
+    <link href="/static/css/fabochart.css" rel='stylesheet' type='text/css'/>
+    <!--clock init-->
+    <script src="/static/js/css3clock.js"></script>
+    <!--Easy Pie Chart-->
+    <!--skycons-icons-->
+    <script src="/static/js/skycons.js"></script>
+    <!--//skycons-icons-->
+    <!--城市输入-->
+    <link rel="stylesheet" href="/static/css/city.css" type="text/css">
+    <script type="text/javascript" src="/static/js/city.js"></script>
+</head>
+<body>
+<div class="page-container">
+    <!--/content-inner-->
+    <div class="left-content">
+        <div class="inner-content">
+            <!-- header-starts -->
+            <div class="header-section">
+                <!--menu-right-->
+                <div class="top_menu">
+                    <div class="float-left">
+                        <a><h1>
+                            <img src="/static/images/logo-light-icon.png" alt="homepage" class="light-logo"/>
+                            <span>EasyFlight易飞</span></h1></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--//menu-right-->
+                <div class="clearfix"></div>
+            </div>
+            <!-- //header-ends -->
+            <!--//outer-wp-->
+            <div class="outter-wp">
+                <div class="sub-heard-part float-left">
+                    <ol class="breadcrumb m-b-0">
+                        <li><a>航班订制</a></li>
+                        <li class="active">票价查询</li>
+                    </ol>
+                </div>
+
+                <div class="inbox-mail">
+                    <div class="col-md-12 compose">
+                        <div class="col-md-12">
+                            <div class="grid-1">
+                                <div class="form-body" align="left">
+                                    <div data-example-id="simple-form-inline">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <label>出发城市</label>
+                                                <input name="fromCity2" type="text" value="中文/拼音" id="fromCity2"
+                                                       onclick="suggestF.display(this,'fromCity2',event);"
+                                                       onkeydown="item_suggest.item_display(this,'',event);"
+                                                       onblur="item_suggest.item_onblur(this);" class="form-control"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>到达城市</label>
+                                                <input name="toCity2" type="text" value="中文/拼音" id="toCity2"
+                                                       onclick="suggestF.display(this,'toCity2',event);"
+                                                       onkeydown="item_suggest.item_display(this,'',event);"
+                                                       onblur="item_suggest.item_onblur(this);"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>日期</label>
+                                                <input type="date" id="date3" class="form-control ng-invalid ng-invalid-required"
+                                                       ng-model="model.date" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>航空公司</label>
+                                                <input type="email" class="form-control"
+                                                       id="company" placeholder="请选择航空公司">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>旅客类型</label>
+                                                <input class="form-control"
+                                                       id="passenger" placeholder="请选择旅客类型">
+                                            </div>
+                                            <div class="float-right">
+                                                <button type="submit" class="btn btn-default" id="getFare">查询</button>
+                                                <script>
+                                                    $('#getFare').click(
+                                                        function () {
+                                                            var fromCity = $('#fromCity2').val();
+                                                            var toCity = $('#toCity2').val();
+                                                            var date = $('#date3').val();
+                                                            var company = $('#company').val();
+                                                            var passenger = $('#passenger').val();
+                                                            var sendData = {
+                                                                "fromCity": fromCity,
+                                                                "toCity": toCity,
+                                                                "date": date,
+                                                                "company":company,
+                                                                "passenger":passenger
+                                                            }
+
+                                                            $.ajax({
+                                                                type: 'post',
+                                                                dataType: 'json',
+                                                                url: '/searchFare/',
+                                                                data: sendData,
+                                                                success: function (data) {
+                                                                    {#var obj=eval(data);#}
+                                                                    {#console.log(obj)#}
+                                                                    var tbody = $('<tbody id="getFlightFare"></tbody>');
+                                                                    for (i in data) {
+                                                                        var tr = $('<tr></tr>');
+                                                                        tr.append('<td>' + data[i].flightNumber + '</td>' + '<td>' + data[i].date1 + '</td>' + '<td>' + data[i].company + '</td>');
+                                                                        tbody.append(tr);
+                                                                    }
+                                                                    $('#getFlightFare').replaceWith(tbody);
+                                                                },
+                                                                error: function () {
+                                                                    alert("defeat")
+                                                                }
+                                                            })
+                                                        }
+                                                    )
+                                                </script>
+                                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                                                        data-target="#pjModal">
+                                                    弹窗测试
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Input Group -->
+                    </div>
+                    <!-- tab content -->
+                    <div class="col-md-12 tab-content tab-content-in">
+                        <div class="tab-pane active text-style" id="tab1">
+                            <div class="inbox-right">
+
+                                <div class="mailbox-content">
+                                    <div class="mail-toolbar clearfix">
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                        <tr class="table-row">
+                                            <th>航班号</th>
+                                            <th>航空公司</th>
+                                            <th>机型</th>
+                                            <th>起飞机场</th>
+                                            <th>降落机场</th>
+                                            <th>起飞时间</th>
+                                            <th>降落时间</th>
+                                            <th>飞行路程</th>
+                                            <th>飞行时间</th>
+                                            <th>舱位类型</th>
+                                            <th>票价</th>
+                                            <th>折扣率</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody id="getFlightFare">
+                                        <!--<tr>-->
+                                        <!--<td></td>-->
+                                        <!--</tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <!--//outer-wp-->
+            <!--footer section start-->
+            <footer>
+                <p>Copyright &copy; 2019,EasyFlight - By SCU BaiGeiShaoNian </p>
+            </footer>
+            <!--footer section end-->
+        </div>
+    </div>
+    <!--//content-inner-->
+    <!--/sidebar-menu-->
+    <div class="sidebar-menu">
+        <header class="logo">
+            <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="../index"> <span
+                id="logo"> <h1>EasyFlight</h1></span>
+            <!--<img id="logo" src="" alt="Logo"/>-->
+        </a>
+        </header>
+        <div style="border-top:1px solid rgba(69, 74, 84, 0.7)"></div>
+        <!--/down-->
+        <div class="down">
+            <a href="../index"><img src="/static/images/admin.jpg"></a>
+            <a href="../index"><span class=" name-caret">Jasmin Leo</span></a>
+            <p>System Administrator in Company</p>
+            <ul>
+                <li><a class="tooltips" href="../index"><span>Profile</span><i class="lnr lnr-user"></i></a></li>
+                <li><a class="tooltips" href="../index"><span>Settings</span><i class="lnr lnr-cog"></i></a></li>
+                <li><a class="tooltips" href="../index"><span>Log out</span><i class="lnr lnr-power-switch"></i></a>
+                </li>
+            </ul>
+        </div>
+        <!--//down-->
+        <div class="menu">
+            <ul id="menu">
+                <li id="menu-academico"><a><i class="fa fa-table"></i> <span>航班订制</span><span
+                        class="fa fa-angle-right" style="float: right"></span></a>
+                    <ul>
+                        <li><a href="../flight">航班查询</a></li>
+                        <li><a href="../flightLine">航线查询</a></li>
+                        <li><a href="../flightFare">票价查询</a></li>
+                    </ul>
+                </li>
+                <li id="menu-academico"><a><i class="fa fa-file-text-o"></i><span>数据分析</span><span
+                        class="fa fa-angle-right" style="float: right"></span></a>
+                    <ul>
+                        <li><a href="../airport">机场数据</a></li>
+                        <li><a href="../company">航空公司</a></li>
+                        <li><a href="../plane">飞机机型</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<!--票价模态框-->
+<div class="modal fade" id="pjModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close second" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title">XXX航班近期票价</h2>
+            </div>
+            <div class="modal-body">
+                <div id="pj" style="height: 400px;width: 580px"></div>
+                <script>
+                    var xData = function () {
+                        var data = [];
+                        for (var i = 1; i < 13; i++) {
+
+                            data.push(i + "月份");
+                        }
+                        return data;
+                    }();
+                    var pjChart = echarts.init(document.getElementById('pj'));
+                    option = {
+                        backgroundColor: "#fff",
+                        // "title": {
+                        //     x: "4%",
+
+                        //     textStyle: {
+                        //         color: '#333',
+                        //         fontSize: '22'
+                        //     },
+                        //     subtextStyle: {
+                        //         color: '#90979c',
+                        //         fontSize: '16',
+
+                        //          },
+                        // },
+                        "tooltip": {
+                            "trigger": "axis",
+                            "axisPointer": {
+                                "type": "shadow",
+                                textStyle: {
+                                    color: "#fff"
+                                }
+
+                            },
+                        },
+                        "grid": {
+                            "borderWidth": 0,
+                            "top": 110,
+                            "bottom": 95,
+                            textStyle: {
+                                color: "#fff"
+                            }
+                        },
+                        // "legend": {
+                        //     x: '4%',
+                        //     top: '11%',
+                        //     textStyle: {
+                        //         color: '#90979c',
+                        //     },
+                        //     "data": ['女', '男', '平均']
+                        // },
+
+
+                        "calculable": true,
+                        "xAxis": [{
+                            "type": "category",
+                            "axisLine": {
+                                lineStyle: {
+                                    color: '#90979c'
+                                }
+                            },
+                            "splitLine": {
+                                "show": false
+                            },
+                            "axisTick": {
+                                "show": false
+                            },
+                            "splitArea": {
+                                "show": false
+                            },
+                            "axisLabel": {
+                                "interval": 0,
+
+                            },
+                            "data": xData,
+                        }],
+                        "yAxis": [{
+                            "type": "value",
+                            "splitLine": {
+                                "show": false
+                            },
+                            "axisLine": {
+                                lineStyle: {
+                                    color: '#90979c'
+                                }
+                            },
+                            "axisTick": {
+                                "show": false
+                            },
+                            "axisLabel": {
+                                "interval": 0,
+
+                            },
+                            "splitArea": {
+                                "show": false
+                            },
+
+                        }],
+                        "dataZoom": [{
+                            "show": true,
+                            "height": 30,
+                            "xAxisIndex": [
+                                0
+                            ],
+                            bottom: 30,
+                            "start": 30,
+                            "end": 100,
+                            handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
+                            handleSize: '110%',
+                            handleStyle: {
+                                color: "#ddd",
+
+                            },
+                            textStyle: {
+                                color: "#fff"
+                            },
+                            borderColor: "#eee"
+
+
+                        }, {
+                            "type": "inside",
+                            "show": true,
+                            "height": 15,
+                            "start": 1,
+                            "end": 35
+                        }],
+                        "series": [{
+                            "name": "总数",
+                            "type": "line",
+                            "stack": "总量",
+                            symbolSize: 10,
+                            symbol: 'circle',
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "#ccc",
+                                    "barBorderRadius": 0,
+                                    "label": {
+                                        "show": true,
+                                        "position": "top",
+                                        formatter: function (p) {
+                                            return p.value > 0 ? (p.value) : '';
+                                        }
+                                    }
+                                }
+                            },
+                            "data": [
+                                1036,
+                                3693,
+                                2962,
+                                3810,
+                                2519,
+                                1915,
+                                1748,
+                                4675,
+                                6209,
+                                4323,
+                                2865,
+                                4298
+                            ]
+                        },
+                        ]
+                    }
+                    pjChart.setOption(option);
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script>
+    var toggle = true;
+
+    $(".sidebar-icon").click(function () {
+        if (toggle) {
+            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+            $("#menu span").css({"position": "absolute"});
+        } else {
+            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+            setTimeout(function () {
+                $("#menu span").css({"position": "relative"});
+            }, 400);
+        }
+
+        toggle = !toggle;
+    });
+</script>
+<!--js -->
+<script src="/static/js/jquery.nicescroll.js"></script>
+<script src="/static/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>
